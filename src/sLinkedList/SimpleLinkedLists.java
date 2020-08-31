@@ -1,3 +1,5 @@
+package sLinkedList;
+
 /**
  * реализация простого связного списка
  */
@@ -36,31 +38,50 @@ public class SimpleLinkedLists {
         node.dData = dData;
         node.next = first; //ссылка на след. элемент - ссылка на голову
         first = node;
+        if (isEmpty()) { //если ссылка на следующий элемент = null, то это последний элемент
+            last = node;
+        }
     }
 
     //просмотр содержимого списка
     public void printList() {
         Link currentNode = first;
-        while (currentNode != null){
+        while (currentNode != null) {
             System.out.println(currentNode);
             currentNode = currentNode.next;
         }
     }
 
     //O(n) до 1000 элементв
-    public void insertLast(int iData, double dData){
+    public void insertLast(int iData, double dData) {
         Link node = new Link();
         node.iData = iData;
         node.dData = dData;
         node.next = null;
-        if (first == null){
+
+        if (isEmpty()) {
+            first = node;
+        } else {
+            last.next = node;
+        }
+        last = node;
+        /*if (first == null) {
             first = node;
         } else {
             Link currentNode = first;
-            while (currentNode.next != null){
+            while (currentNode.next != null) {
                 currentNode = currentNode.next;
             }
             currentNode.next = node;
+        }*/
+    }
+
+    public Link deleteFirst(){
+        if (isEmpty()){
+            return null;
         }
+        Link result = this.first;
+        first = first.next; //первый элемент делаем вторым
+        return result;
     }
 }

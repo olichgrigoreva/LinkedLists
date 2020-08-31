@@ -1,3 +1,5 @@
+package sLinkedList;
+
 public class Program {
     public static void main(String[] args) {
         SimpleLinkedLists simpleLinkedLists = new SimpleLinkedLists();
@@ -15,5 +17,9 @@ public class Program {
 
         System.out.println();
         simpleLinkedLists2.printList(); //выведется с 0 по 3 элемент
+
+        SimpleLinkedLists.Link link = simpleLinkedLists2.deleteFirst();
+        System.out.print("из списка был удален элемент: " + link + "\n");
+        simpleLinkedLists2.printList();
     }
 }
