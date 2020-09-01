@@ -8,7 +8,8 @@ package bdLinkedList;
 public class BiDirectionalLinkedList<T> {
     Link<T> first;
     Link<T> last;
-    static class Link<T>{
+
+    public static class Link<T>{
         T data;
         public Link next;
         public Link prev;
@@ -19,15 +20,31 @@ public class BiDirectionalLinkedList<T> {
         last = null;
     }
 
-    public void insertFirst(T data){
+    public void insertFirst(T data){ //O(n)
         Link<T> node = new Link<>();
         node.data = data;
         node.prev = null; //ссылка = null, т.к. это первый элемент
         node.next = first; //т.к. добавляем первый элемент
-        first = node;
         if (isEmpty()){
             last = node;
+        } else {
+            first.prev = node;
         }
+        first = node;
+    }
+
+    public void insertLast(T data) { //O(n)
+        Link<T> node = new Link<>();
+        node.data = data;
+        node.prev = last;
+        node.next = null; //т.к. этот элемент становится последним
+        last.next = node;
+        if (isEmpty()) {
+            first = node;
+        } else {
+            last.next = node;
+        }
+        last = node;
     }
 
     public boolean isEmpty() {
@@ -41,17 +58,24 @@ public class BiDirectionalLinkedList<T> {
         }
         T data = first.data;
         first = first.next;
-        first.prev = null;
+        if (!isEmpty()){
+            first.prev = null;
+        }
         return data;
     }
 
-    public T deleteLast(){
+    public T deleteLast(){ //O(n)
         if (isEmpty()){
             return null;
         }
         T data = last.data;
         last = last.prev; //первый ссылается на предыдущий
-        last.next = null;
+        if (last == null){
+            first = null;
+        }
+        if (!isEmpty()){
+            last.next = null;
+        }
         return data;
     }
 
@@ -71,5 +95,9 @@ public class BiDirectionalLinkedList<T> {
                 "first=" + first +
                 ", last=" + last +
                 '}';
+    }
+
+    public Iterator<T> iterator(){
+        return new Iterator<>(this); //новый экземпляр итератеро для текущего списка
     }
 }
